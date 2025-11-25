@@ -11,16 +11,20 @@ struct ApplicationSpecification {
 
 class Application {
 public:
-    Application();
+    Application() {}
     ~Application();
+
+    int Init();
 
     int Run();
 
 private: 
     void InitializeGL();
+    void LoadMap();
 
+    
     void BeginRendering();
-    void RenderScene();
+    //void RenderScene();
 
     void ProcessInput(GLFWwindow *window);
     

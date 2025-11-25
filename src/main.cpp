@@ -3,9 +3,10 @@
 
 
 int main() {
-    std::cout << "RUNNING APPLICATION..." << std::endl;
-
     Application app;
 
+    app.Init();
+
+    std::cout << "RUNNING APPLICATION..." << std::endl;
     return app.Run();
 }

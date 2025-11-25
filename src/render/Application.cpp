@@ -5,14 +5,48 @@
 #include <GLFW/glfw3.h>
 
 #include <iostream>		// For std::cerr
-
-Application::Application() {
-	InitializeGL();
-}
+#include <fstream>
 
 Application::~Application() {
 	glfwTerminate();
 	exit(0);
+}
+
+int Application::Init() {
+	InitializeGL();
+	LoadMap();
+
+	return 0;
+}
+
+void Application::LoadMap() {
+	std::ifstream modelFile;
+
+	// Cube model
+	modelFile.open("models/cube.txt");
+	int numLines = 0;
+	if(modelFile.is_open()) {
+		modelFile >> numLines;
+	}
+	float *cubeModel = new float[numLines];
+	for(int i = 0; i < numLines; i++) {
+		modelFile >> cubeModel[i];
+	}
+	std::cout << "Cube model has: " << numLines << " lines" << std::endl;
+	int numVertsCube = numLines/8;
+	modelFile.close();
+
+	// Key Model
+	modelFile.open("models/knot.txt");
+	numLines = 0;
+	if(modelFile.is_open()) {
+		modelFile >> numLines;
+	}
+	float *keyModel = new float[numLines];
+	for(int i = 0; i < numLines; i++) {
+		modelFile >> keyModel[i];
+	}
+	std::cout << "Knot model has: " << numLines << " lines" << std::endl;
 }
 
 void Application::InitializeGL() {
@@ -50,15 +84,13 @@ void Application::BeginRendering() {
 	glClearColor(0.6f, 0.8f, 1.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
+
+
 	// TODO: render buffers
 	//unsigned int VBO;
 	//glGenBuffers(1, &VBO);
 	//glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	//glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
-}
-
-void Application::RenderScene() {
-
 }
 
 int Application::Run() {
@@ -68,7 +100,7 @@ int Application::Run() {
 		glfwPollEvents();
 
 		BeginRendering();
-		RenderScene();
+		//RenderScene();
 
 		// Diplay the frame
 		glfwSwapBuffers(m_window);

@@ -2,36 +2,39 @@
 #define APPLICATION_INCLUDED
 
 #include <GLFW/glfw3.h>
+#include "Scene.hpp"
 
 struct ApplicationSpecification {
-    int width = 800;
-    int height = 600;
-    const char *title = "Maze";
+	int width = 800;
+	int height = 600;
+	const char *title = "Maze";
 };
 
 class Application {
 public:
-    Application() {}
-    ~Application();
+	Application() {}
+	~Application();
 
-    int Init();
+	int Init();
 
-    int Run();
+	int Run();
 
 private: 
-    void InitializeGL();
-    void LoadMap();
+	void InitializeGL();
+	void LoadMap();
 
-    
-    void BeginRendering();
-    //void RenderScene();
 
-    void ProcessInput(GLFWwindow *window);
-    
+	void BeginRendering();
+	//void RenderScene();
+
+	void ProcessInput(GLFWwindow *window);
+	
 private:
 
-    ApplicationSpecification m_spec;
-    GLFWwindow *m_window;
+	ApplicationSpecification m_spec;
+	GLFWwindow *m_window;
+
+	Scene *scene;
 };
 
 #endif

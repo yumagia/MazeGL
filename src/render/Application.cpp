@@ -1,6 +1,7 @@
 // Include GLAD first
 #include "glad/glad.h"
 #include "Application.hpp"
+#include "Scene.hpp"
 
 #include <GLFW/glfw3.h>
 
@@ -21,6 +22,10 @@ int Application::Init() {
 
 void Application::LoadMap() {
 	std::ifstream modelFile;
+
+	scene = new Scene();
+	scene->numVerts = 0;
+	scene->numModels = 0;
 
 	// Cube model
 	modelFile.open("models/cube.txt");
@@ -47,6 +52,18 @@ void Application::LoadMap() {
 		modelFile >> keyModel[i];
 	}
 	std::cout << "Knot model has: " << numLines << " lines" << std::endl;
+	int numVertsKey = numLines/8;
+	modelFile.close();
+
+	scene->modelData = new float[8 * (numVertsCube + numVertsKey)];
+	std::copy(cubeModel, cubeModel + 8 * numVertsCube, (scene->modelData));
+	std::copy(keyModel, keyModel + 8 * numVertsKey, (scene->modelData) + 8 * numVertsCube);
+	scene->numVerts = numVertsCube + numVertsKey;
+	scene->startVerts[0] = 0;
+	scene->startVerts[1] = numVertsCube;
+
+	delete[] cubeModel;
+	delete[] keyModel;
 }
 
 void Application::InitializeGL() {
@@ -105,6 +122,10 @@ int Application::Run() {
 		// Diplay the frame
 		glfwSwapBuffers(m_window);
 	}
+
+	scene->~Scene();
+
+	std::cout << "passed" << std::endl;
 
 	glfwTerminate();
 	return 0;

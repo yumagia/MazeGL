@@ -25,7 +25,7 @@ private:
 
 
 	void BeginRendering();
-	//void RenderScene();
+	void RenderScene();
 
 	void ProcessInput(GLFWwindow *window);
 	

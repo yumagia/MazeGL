@@ -12,6 +12,8 @@ public:
 	int		numVerts = 0;
 	int		startVerts[MAX_SCENE_MODELS];
 	int		numModels = 0;
+
+	float deltaTime = 0;
 };
 
 #endif

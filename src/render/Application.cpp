@@ -4,6 +4,8 @@
 #include "Scene.hpp"
 
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 #include <iostream>		// For std::cerr
 #include <fstream>
@@ -14,8 +16,8 @@ Application::~Application() {
 }
 
 int Application::Init() {
-	InitializeGL();
 	LoadMap();
+	InitializeGL();
 
 	return 0;
 }
@@ -89,38 +91,61 @@ void Application::InitializeGL() {
 	}   
 
 	glfwSwapInterval(1);
-}
 
-void Application::BeginRendering() {
 	// Set viewport
 	int viewWidth, viewHeight;
 	glfwGetFramebufferSize(m_window, &viewHeight, &viewHeight);
 	glViewport(0, 0, viewWidth, viewHeight);
 
+	GLuint vao;
+	glGenVertexArrays(1, &vao);
+	glBindVertexArray(vao);
+
+	GLuint vbo;
+	glGenBuffers(1, &vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBufferData(GL_ARRAY_BUFFER, 8 * (scene->numVerts) * sizeof(float), scene->modelData, GL_STATIC_DRAW);
+
+	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+	GLuint fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
+
+	glShaderSource(vertexShader, 1, "", 0)
+
+	glBindVertexArray(0);
+
+	glEnable(GL_DEPTH_TEST);
+}
+
+void Application::BeginRendering() {
+
+}
+
+void Application::RenderScene() {
 	// Clear the frame
 	glClearColor(0.6f, 0.8f, 1.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
+	scene->deltaTime = glfwGetTime();
 
+	glm::mat4 camera = glm::lookAt(
+	glm::vec3(3.f, 0.f, 0.f),
+	glm::vec3(0.0f, 0.0f, 0.0f),
+	glm::vec3(0.0f, 0.0f, 1.0f)	);
+	
+	GLuint transformLoc = glGetUniformLocation();
 
-	// TODO: render buffers
-	//unsigned int VBO;
-	//glGenBuffers(1, &VBO);
-	//glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
+	// Diplay the frame
+	glfwSwapBuffers(m_window);
+	glfwPollEvents();
 }
 
 int Application::Run() {
 	while(!glfwWindowShouldClose(m_window)) {
 		// Process input and events
 		ProcessInput(m_window);
-		glfwPollEvents();
 
 		BeginRendering();
-		//RenderScene();
-
-		// Diplay the frame
-		glfwSwapBuffers(m_window);
+		RenderScene();
 	}
 
 	scene->~Scene();

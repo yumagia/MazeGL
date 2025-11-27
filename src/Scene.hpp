@@ -9,6 +9,8 @@ struct Player {
 	Vec3f	origin;
 	Vec3f	vel;
 
+	Vec3f	wishDir;
+
 	float	yaw;
 	float	pitch;
 };

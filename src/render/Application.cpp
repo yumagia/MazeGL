@@ -247,6 +247,9 @@ void Application::RenderScene() {
 			if(scene->level[gridCount] == LEVEL_WALL) {
 				DrawModel(scene->startVerts[0], scene->startVerts[1], glm::vec3(x, y, 0), glm::mat4(1), glm::vec3(1.f, 1.f, 1.f));
 			}
+			else if(scene->level[gridCount] == LEVEL_KEY) {
+				DrawModel(scene->startVerts[1], scene->startVerts[2], glm::vec3(x, y, 0), glm::mat4(1), glm::vec3(0.f, 1.f, 0.f));
+			}
 
 			DrawModel(scene->startVerts[0], scene->startVerts[1], glm::vec3(x, y, -1), glm::mat4(1), glm::vec3(0.1f, 0.1f, 0.1f));
 			gridCount++;
@@ -306,4 +309,8 @@ void Application::ProcessInput(GLFWwindow *window) {
     if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {	// Close on escape
         glfwSetWindowShouldClose(window, true);
 	}
+
+	if(glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {	// Close on escape
+	}
+
 }

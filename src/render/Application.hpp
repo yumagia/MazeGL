@@ -3,10 +3,11 @@
 
 #include <GLFW/glfw3.h>
 #include "Scene.hpp"
+#include <glm/glm.hpp>
 
 struct ApplicationSpecification {
-	int width = 800;
-	int height = 600;
+	int width = 1200;
+	int height = 900;
 	const char *title = "Maze";
 };
 
@@ -26,6 +27,7 @@ private:
 
 	void BeginRendering();
 	void RenderScene();
+	void DrawModel(int startVert, int NumVerts, glm::vec3 pos, glm::mat4 rotatMat, glm::vec3 color);
 
 	void ProcessInput(GLFWwindow *window);
 	
@@ -35,6 +37,10 @@ private:
 	GLFWwindow *m_window;
 
 	Scene *scene;
+	GLuint shaderHandle;
+
+	GLuint vbo;
+	GLuint vao;
 };
 
 #endif

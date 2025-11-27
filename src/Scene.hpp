@@ -1,7 +1,17 @@
 #ifndef SCENE_INCLUDED
 #define SCENE_INCLUDED
 
-#define MAX_SCENE_MODELS	5
+#define MAX_SCENE_MODELS 5
+
+#include "Math.hpp"
+
+struct Player {
+	Vec3f	origin;
+	Vec3f	vel;
+
+	float	yaw;
+	float	pitch;
+};
 
 class Scene {
 public:
@@ -13,7 +23,13 @@ public:
 	int		startVerts[MAX_SCENE_MODELS];
 	int		numModels = 0;
 
+	int		width, height;
+
+	int		*level = nullptr;
+
 	float deltaTime = 0;
+
+	Player player;
 };
 
 #endif

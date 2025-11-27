@@ -4,4 +4,6 @@
 Scene::~Scene() {
 	delete[] modelData;
 	modelData = nullptr;
+	delete[] level;
+	level = nullptr;
 }

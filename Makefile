@@ -1,5 +1,5 @@
-CFLAGS = -std=c++17 -O2 -ggdb
-LDFLAGS = -lglfw
+CFLAGS = -std=c++17 -ggdb
+LDFLAGS = -lGL -lglfw
 
 TARGET_EXEC := Maze
 
